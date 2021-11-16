@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export default class Profile extends Component {
   render() {
-    return <div data-testid="page-profile"></div>;
+    return <div data-testid="page-profile">{/* TODO: */}</div>;
   }
 }
