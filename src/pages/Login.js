@@ -4,6 +4,12 @@ import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
 
 export default class Login extends Component {
+  /*
+  consultei esse artigo para resolver um warning
+  https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component
+  */
+  mounted = false;
+
   constructor() {
     super();
 
@@ -13,6 +19,14 @@ export default class Login extends Component {
       loading: false,
       loggedIn: false,
     };
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleChange = ({ target }) => {
@@ -31,7 +45,7 @@ export default class Login extends Component {
 
     this.setState({ loading: true }, async () => {
       await createUser({ name });
-      this.setState({ loading: false, loggedIn: true });
+      if (this.mounted) this.setState({ loading: false, loggedIn: true });
     });
   };
 
@@ -65,7 +79,6 @@ export default class Login extends Component {
           </button>
         </form>
         {loading && <Loading />}
-
       </div>
     );
   }
