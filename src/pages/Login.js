@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
+import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
 
 export default class Login extends Component {
@@ -8,6 +10,8 @@ export default class Login extends Component {
     this.state = {
       name: '',
       loginBtnDisabled: true,
+      loading: false,
+      loggedIn: false,
     };
   }
 
@@ -21,36 +25,47 @@ export default class Login extends Component {
     });
   };
 
-  loginBtnClickHandler = () => {
+  loginBtnClickHandler = async (event) => {
+    event.preventDefault();
     const { name } = this.state;
-    createUser({ name });
+
+    this.setState({ loading: true }, async () => {
+      await createUser({ name });
+      this.setState({ loading: false, loggedIn: true });
+    });
   };
 
   render() {
-    const { name, loginBtnDisabled } = this.state;
+    const { name, loginBtnDisabled, loading, loggedIn } = this.state;
+
+    if (loggedIn) return <Redirect to="/search" />;
 
     return (
       <div data-testid="page-login">
-        <label htmlFor="name">
-          Nome
-          <input
-            type="text"
-            data-testid="login-name-input"
-            id="name"
-            name="name"
-            value={ name }
-            onChange={ this.handleChange }
-          />
-        </label>
+        <form>
+          <label htmlFor="name">
+            Nome
+            <input
+              type="text"
+              data-testid="login-name-input"
+              id="name"
+              name="name"
+              value={ name }
+              onChange={ this.handleChange }
+            />
+          </label>
 
-        <button
-          type="submit"
-          data-testid="login-submit-button"
-          disabled={ loginBtnDisabled }
-          onClick={ this.loginBtnClickHandler }
-        >
-          Entrar
-        </button>
+          <button
+            type="submit"
+            data-testid="login-submit-button"
+            disabled={ loginBtnDisabled }
+            onClick={ this.loginBtnClickHandler }
+          >
+            Entrar
+          </button>
+        </form>
+        {loading && <Loading />}
+
       </div>
     );
   }
