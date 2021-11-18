@@ -20,7 +20,7 @@ export default class Header extends Component {
   fetchUser = async () => {
     this.setState({ loading: true });
     const user = await getUser();
-    console.log(user);
+    // console.log(user);
     this.setState({ loading: false, userName: user.name });
     return user;
   };
@@ -37,9 +37,15 @@ export default class Header extends Component {
         )}
 
         <nav>
-          <Link to="/search" data-testid="link-to-search">Pesquisa</Link>
-          <Link to="/favorites" data-testid="link-to-favorites">Favoritas</Link>
-          <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
+          <Link to="/search" data-testid="link-to-search">
+            Pesquisa
+          </Link>
+          <Link to="/favorites" data-testid="link-to-favorites">
+            Favoritas
+          </Link>
+          <Link to="/profile" data-testid="link-to-profile">
+            Perfil
+          </Link>
         </nav>
       </header>
     );
