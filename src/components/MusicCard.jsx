@@ -6,7 +6,6 @@ export default class MusicCard extends Component {
     const { trackName, previewUrl } = this.props;
     return (
       <div>
-        {console.log(trackName, previewUrl)}
         <span>{ trackName }</span>
         <audio
           src={ previewUrl }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
+import MusicCard from '../components/MusicCard';
 
 export default class Album extends Component {
   constructor() {
@@ -21,7 +22,6 @@ export default class Album extends Component {
 
   render() {
     const { album } = this.state;
-    console.log(album);
 
     return (
       <>
@@ -34,6 +34,13 @@ export default class Album extends Component {
               <h4 data-testid="artist-name">{album[0].artistName}</h4>
             </div>
 
+            {album.slice(1).map((music) => (
+              <MusicCard
+                key={ music.trackId }
+                trackName={ music.trackName }
+                previewUrl={ music.previewUrl }
+              />
+            ))}
           </div>
         )}
       </>
