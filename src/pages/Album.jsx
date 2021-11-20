@@ -34,13 +34,16 @@ export default class Album extends Component {
               <h4 data-testid="artist-name">{album[0].artistName}</h4>
             </div>
 
-            {album.slice(1).map((music) => (
-              <MusicCard
-                key={ music.trackId }
-                trackName={ music.trackName }
-                previewUrl={ music.previewUrl }
-              />
-            ))}
+            {album
+              .filter((entry) => entry.kind === 'song')
+              .map((music) => (
+                <MusicCard
+                  key={ music.trackId }
+                  trackName={ music.trackName }
+                  previewUrl={ music.previewUrl }
+                  trackId={ music.trackId }
+                />
+              ))}
           </div>
         )}
       </>
