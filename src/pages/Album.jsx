@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 import MusicCard from '../components/MusicCard';
 
 export default class Album extends Component {
@@ -14,10 +15,13 @@ export default class Album extends Component {
   }
 
   componentDidMount() {
-    const { match } = this.props;
-    getMusics(match.params.id).then((response) => {
-      this.setState({ album: response });
-    });
+    this.fetchAlbum();
+  }
+
+  fetchAlbum = async () => {
+    const { match: { params: { id } } } = this.props;
+    const album = await getMusics(id);
+    this.setState({ album });
   }
 
   render() {
