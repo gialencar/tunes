@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
+import Loading from './Loading';
 
 export default class MusicCard extends Component {
   constructor() {
@@ -7,40 +9,65 @@ export default class MusicCard extends Component {
 
     this.state = {
       checked: false,
+      loading: false,
     };
   }
 
-  handleChange = () => {
+  componentDidMount() {
+    // recover favorites from local storage
+    const Id = 1445881683; // temp
+    const { trackId } = this.props;
+    // console.log(trackId);
+    if (trackId === Id) {
+      this.toggleCheckbox();
+    }
+  }
+
+  toggleCheckbox = () => {
     this.setState((prevState) => ({
       checked: !prevState.checked,
+      loading: false,
     }));
+  }
+
+  handleChange = (event) => {
+    const { id: trackId, checked } = event.target;
+
+    this.setState({ loading: true }, async () => {
+      if (checked) await addSong({ trackId });
+      else await removeSong({ trackId });
+      this.toggleCheckbox();
+    });
   }
 
   render() {
     const { trackName, previewUrl, trackId } = this.props;
-    const { checked } = this.state;
+    const { checked, loading } = this.state;
 
     return (
-      <div>
-        <span>{trackName}</span>
-        <audio src={ previewUrl } controls data-testid="audio-component">
-          <track kind="captions" />
-          O seu navegador não suporta o elemento
-          <code>audio</code>
-        </audio>
+      loading
+        ? <Loading />
+        : (
+          <div>
+            <span>{trackName}</span>
+            <audio src={ previewUrl } controls data-testid="audio-component">
+              <track kind="captions" />
+              O seu navegador não suporta o elemento
+              <code>audio</code>
+            </audio>
 
-        <label htmlFor={ trackName }>
-          <input
-            type="checkbox"
-            name=""
-            id={ trackName }
-            checked={ checked }
-            onChange={ this.handleChange }
-            data-testid={ `checkbox-music-${trackId}` }
-          />
-          Favorita
-        </label>
-      </div>
+            <label htmlFor={ trackId }>
+              <input
+                type="checkbox"
+                id={ trackId }
+                checked={ checked }
+                onChange={ this.handleChange }
+                data-testid={ `checkbox-music-${trackId}` }
+              />
+              Favorita
+            </label>
+          </div>
+        )
     );
   }
 }
