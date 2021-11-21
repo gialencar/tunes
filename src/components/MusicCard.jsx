@@ -14,11 +14,8 @@ export default class MusicCard extends Component {
   }
 
   componentDidMount() {
-    // recover favorites from local storage
-    const Id = 1445881683; // temp
-    const { trackId } = this.props;
-    // console.log(trackId);
-    if (trackId === Id) {
+    const { isInFavorites } = this.props;
+    if (isInFavorites) {
       this.toggleCheckbox();
     }
   }
@@ -76,4 +73,5 @@ MusicCard.propTypes = {
   trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
+  isInFavorites: PropTypes.bool.isRequired,
 };
