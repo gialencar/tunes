@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
+import './login.css';
+import trybeTunes from '../images/trybeTunes.png';
 
 export default class Login extends Component {
   /*
@@ -55,30 +57,35 @@ export default class Login extends Component {
     if (loggedIn) return <Redirect to="/search" />;
 
     return (
-      <div data-testid="page-login">
-        <form>
-          <label htmlFor="name">
-            Nome
-            <input
-              type="text"
-              data-testid="login-name-input"
-              id="name"
-              name="name"
-              value={ name }
-              onChange={ this.handleChange }
-            />
-          </label>
+      <div className="container">
+        <main data-testid="page-login">
+          <img src={ trybeTunes } alt="logo" />
+          <form>
+            <label htmlFor="name">
+              {/* Nome */}
+              <input
+                className="name"
+                type="text"
+                data-testid="login-name-input"
+                id="name"
+                name="name"
+                placeholder="Nome"
+                value={ name }
+                onChange={ this.handleChange }
+              />
+            </label>
 
-          <button
-            type="submit"
-            data-testid="login-submit-button"
-            disabled={ loginBtnDisabled }
-            onClick={ this.loginBtnClickHandler }
-          >
-            Entrar
-          </button>
-        </form>
-        {loading && <Loading />}
+            <button
+              type="submit"
+              data-testid="login-submit-button"
+              disabled={ loginBtnDisabled }
+              onClick={ this.loginBtnClickHandler }
+            >
+              Entrar
+            </button>
+          </form>
+          {loading && <Loading />}
+        </main>
       </div>
     );
   }
