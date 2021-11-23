@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import MusicCard from '../components/MusicCard';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 export default class Favorites extends Component {
   constructor() {
@@ -30,6 +30,27 @@ export default class Favorites extends Component {
     );
   }
 
+  handleChange = async (song) => {
+    const { favorites } = this.state;
+    const inFav = favorites.some((f) => +f.trackId === +song.trackId);
+
+    this.setState({ loading: true }, async () => {
+      if (inFav) {
+        await removeSong(song);
+        console.log('removed ', song.trackId);
+        this.setState({ favorites: favorites.filter((f) => f.trackId !== song.trackId) });
+      } else {
+        await addSong(song);
+        console.log('added ', song.trackId);
+        this.setState((prevState) => ({
+          favorites: [...prevState.favorites, song],
+        }));
+      }
+
+      this.setState({ loading: false });
+    });
+  }
+
   render() {
     const { favorites, loading } = this.state;
 
@@ -49,6 +70,7 @@ export default class Favorites extends Component {
                   previewUrl={ previewUrl }
                   trackId={ trackId }
                   isInFavorites={ favorites.some((f) => +f.trackId === trackId) }
+                  handleChange={ this.handleChange }
                 />
               ))}
           </div>)}

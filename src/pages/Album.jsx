@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import MusicCard from '../components/MusicCard';
 import Loading from '../components/Loading';
 
@@ -26,7 +26,7 @@ export default class Album extends Component {
     const { match: { params: { id } } } = this.props;
     const album = await getMusics(id);
     this.setState({ album });
-    console.log(id, album);
+    // console.log(id, album);
   }
 
   fetchFavorites = async () => {
@@ -35,8 +35,30 @@ export default class Album extends Component {
     this.setState({ loading: false, favorites });
   }
 
+  handleChange = async (song) => {
+    const { favorites } = this.state;
+    const inFav = favorites.some((f) => +f.trackId === +song.trackId);
+
+    this.setState({ loading: true }, async () => {
+      if (inFav) {
+        await removeSong(song);
+        console.log('removed ', song.trackId);
+        this.setState({ favorites: favorites.filter((f) => f.trackId !== song.trackId) });
+      } else {
+        await addSong(song);
+        console.log('added ', song.trackId);
+        this.setState((prevState) => ({
+          favorites: [...prevState.favorites, song],
+        }));
+      }
+
+      this.setState({ loading: false });
+    });
+  }
+
   render() {
     const { album, loading, favorites } = this.state;
+    console.log('render > favorites : ', favorites);
 
     return (
       <>
@@ -59,6 +81,7 @@ export default class Album extends Component {
                     previewUrl={ previewUrl }
                     trackId={ trackId }
                     isInFavorites={ favorites.some((f) => +f.trackId === trackId) }
+                    handleChange={ this.handleChange }
                   />
                 ))}
             </div>
