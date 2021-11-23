@@ -28,10 +28,11 @@ export default class MusicCard extends Component {
   }
 
   handleChange = (event) => {
-    const { id: trackId, checked } = event.target;
+    const { checked } = event.target;
+    const { trackName, previewUrl, trackId } = this.props;
 
     this.setState({ loading: true }, async () => {
-      if (checked) await addSong({ trackId });
+      if (checked) await addSong({ trackId, trackName, previewUrl });
       else await removeSong({ trackId });
       this.toggleCheckbox();
     });

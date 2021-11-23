@@ -26,6 +26,7 @@ export default class Album extends Component {
     const { match: { params: { id } } } = this.props;
     const album = await getMusics(id);
     this.setState({ album });
+    console.log(id, album);
   }
 
   fetchFavorites = async () => {
