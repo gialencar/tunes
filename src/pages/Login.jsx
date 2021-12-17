@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
-import './login.css';
 import trybeTunes from '../images/trybeTunes.png';
+import tw from '../helpers/tailwind';
 
 export default class Login extends Component {
   /*
@@ -57,14 +57,27 @@ export default class Login extends Component {
     if (loggedIn) return <Redirect to="/search" />;
 
     return (
-      <div className="container">
-        <main data-testid="page-login">
+      <div
+        className={ tw(
+          'h-screen',
+        ) }
+      >
+        <main data-testid="page-login" className="pt-18">
           <img src={ trybeTunes } alt="logo" />
-          <form>
+          <form
+            className={ tw(
+              'flex flex-col items-stretch',
+              'gap-5 p-16',
+            ) }
+          >
             <label htmlFor="name">
               {/* Nome */}
               <input
-                className="name"
+                className={ tw(
+                  'rounded-full py-2 px-4',
+                  'w-full',
+                  'text-grey-800 border-solid border-2 border-gray-200',
+                ) }
                 type="text"
                 data-testid="login-name-input"
                 id="name"
@@ -78,6 +91,11 @@ export default class Login extends Component {
             <button
               type="submit"
               data-testid="login-submit-button"
+              className={ tw(
+                'py-2 px-4 mx-14',
+                'rounded-full',
+                'shadow-sm text-white bg-gradient-to-r from-green-500 to-cyan-500',
+              ) }
               disabled={ loginBtnDisabled }
               onClick={ this.loginBtnClickHandler }
             >
