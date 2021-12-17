@@ -32,13 +32,13 @@ Aplicação capaz de reproduzir músicas consumindo a api do Itunes, criar uma l
 - Clone o repositório
 
 ```
-
+git clone git@github.com:gialencar/trybetunes.git
 ```
 
 - Instale as dependências
 
 ```bash
-npm install
+cd trybetunes && npm install
 ```
 
 Execute a aplicação
