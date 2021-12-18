@@ -61,7 +61,7 @@ export default class Album extends Component {
     console.log('render > favorites : ', favorites);
 
     return (
-      <>
+      <div>
         <Header />
         {loading ? <Loading /> : (
           album && (
@@ -87,7 +87,7 @@ export default class Album extends Component {
             </div>
           )
         ) }
-      </>
+      </div>
     );
   }
 }
