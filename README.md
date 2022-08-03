@@ -5,6 +5,13 @@
 desenvolvida durante o curso da Trybe.<br>
 Aplicação capaz de reproduzir músicas consumindo a api do Itunes, criar uma lista de músicas favoritas e editar o perfil da pessoa usuária logada.
 
+## Capturas de tela
+<details>
+  <summary> Expandir / Colapsar </summary>
+  <img src="./assets/login-screen.jpg">
+  <img src="./assets/search-screen.jpg">
+</details>
+
 <br>
 
 ## Habilidades desenvolvidas
@@ -35,10 +42,10 @@ Aplicação capaz de reproduzir músicas consumindo a api do Itunes, criar uma l
 git clone git@github.com:gialencar/trybetunes.git
 ```
 
-- Instale as dependências
+- Entre na pasta e instale as dependências
 
 ```bash
-cd trybetunes && npm install
+cd trybetunes && npm ci
 ```
 
 Execute a aplicação
