@@ -6,7 +6,7 @@ desenvolvida durante o curso da Trybe.<br>
 Aplicação capaz de reproduzir músicas consumindo a api do Itunes, criar uma lista de músicas favoritas e editar o perfil da pessoa usuária logada.
 
 ## Capturas de tela
-<details>
+<details open>
   <summary> Expandir / Colapsar </summary>
   <img src="./assets/login-screen.jpg">
   <img src="./assets/search-screen.jpg">
